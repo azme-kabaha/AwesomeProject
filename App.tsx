@@ -1,104 +1,5 @@
-
-
-//------------------------my note app with   with flat list ----------------------------------
-
-
-import {
-	Button,
-	FlatList,
-	ScrollView,
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-  } from 'react-native';
-  //import React from 'react'
-  import {useState} from 'react';
-  
-  const App = () => {
-	// 1
-	const [value, setValue] = useState('');
-  
-	const handeleOneChangeText = interdText => {
-	  setValue(interdText);
-	};
-  
-	2
-	const [listOfNotes, setlistOfNotes] = useState([]);
-  
-	const handelOnPressButton = () => {
-	  setlistOfNotes(currentNotes => [...currentNotes, value]);
-	};
-  
-	return (
-	  <View
-		style={{
-		  padding: 60,
-		  paddingHorizontal:15,
-		  flex:1,
-		}}>
-  
-		  {/* to rander input along with button*/}
-  
-		<View style={styles.inputContainer}>
-		  <TextInput
-			onChangeText={handeleOneChangeText}
-			style={styles.inputStyle}
-			placeholder=" Add your Note Here"
-		  />
-		  <Button onPress={handelOnPressButton} color={'#000'} title="Add Note" />
-		</View>
-  
-		{/* to render all the notes that we created */}
-  
-		<View style={styles.listContainer}>
-
-		  <FlatList
-		  data={listOfNotes}
-		  renderItem={(itemData)=>(
-			<Text  style={styles.listitem}>{itemData.item}</Text>
-		  )}
-		 />
-			
-		</View>
-  
-	  </View>
-	);
-  };
-  
-  export default App;
-  
-  const styles = StyleSheet.create({
-	inputContainer: {
-	  flex:1,
-	  flexDirection: 'row',
-	  paddingBottom: 30,
-	  borderBottomWidth: 1,
-	  alignItems:'center',
-	  justifyContent:'space-between',
-	},
-	inputStyle: {
-	  flex: 1,
-	  borderWidth: 1,
-	  borderColor: '#ddd',
-	},
-	listContainer: {
-	  paddingTop: 30,
-	  flex:3,
-	},
-	listitem: {
-	  borderRadius: 1,
-	  borderColor: 'red',
-	  backgroundColor: 'green',
-	  padding: 20,
-	  marginBottom: 20,
-	  color: '#fff',
-	  fontSize: 20,
-	},
-  });
-
-  //--------------------------------------------------------------------
-            // convert react To react native
+//--------------------------------------------------------------------
+// convert react To react native
 
 // import { Button, StyleSheet, Text, View } from 'react-native'
 // import {useState} from 'react';
@@ -107,13 +8,13 @@ import {
 // 	const [isLogedIn, setIslogedin] = useState(false);
 // 	let element;
 // 	if (isLogedIn) {
-// 		element= <Text>i'm loggedIn</Text>	
+// 		element= <Text>i'm loggedIn</Text>
 // 	}else{
 // 		element= <Text>i'm Not loggedIn</Text>
 // 	}
 //   return (
 // 	<View style={{flex:1,justifyContent:'center'}}>
-		
+
 // 	  <Button title='login' onPress={()=> setIslogedin(true)}
 
 // 	  />
@@ -126,3 +27,93 @@ import {
 // export default App
 
 // const styles = StyleSheet.create({})
+
+//---------------------------------------- use state----------
+import {
+  Button, FlatList,  ScrollView, StyleSheet, Text, TextInput, View, Pressable,
+} from 'react-native';
+import React, {useState} from 'react';
+
+const App = () => {
+
+  const [valueText, setText] = useState('');
+
+  const changeTextFun = getEnterdText => {
+    setText(getEnterdText);
+  };
+
+  const [listofNotes, setListOfNotes] = useState([]);
+  const buttoonFun = () => {
+    setListOfNotes(currentNotes => [...currentNotes, valueText]);
+   setText('')
+  };
+
+  const RemoveItemFun=(getCurrntIndex)=>{
+    let copyListOfNotes=[...listofNotes]
+    copyListOfNotes= copyListOfNotes.filter((_,index)=> getCurrntIndex !== index)
+    setListOfNotes(copyListOfNotes)
+    
+  }
+      
+  return (
+    <View style={styles.parentView}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={changeTextFun}
+          style={styles.input}
+          placeholder="Add your Note Here"
+         // value={valueText}
+         value ={valueText}
+        />
+        <Button onPress={buttoonFun} color={'#000'} title="Add Note " />
+      </View>
+
+      {/* to render all the list that we created */}
+      <View style={styles.listcontainer}>
+
+        <FlatList
+          data={listofNotes}
+          renderItem={(azm) => (
+            <Pressable onPress={()=>RemoveItemFun(azm.index)}>
+               <Text style={styles.listitem}>{azm.item}</Text> 
+            </Pressable>
+             )}
+        />
+      </View>
+    </View> );};
+
+export default App;
+
+const styles = StyleSheet.create({
+  parentView: {
+    padding: 60,
+    paddingHorizontal: 15,
+    flex: 1,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    paddingBottom: 30,
+    borderBottomWidth: 1,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    flex: 1,
+  },
+  listcontainer: {
+    paddingTop: 30,
+    flex: 3,
+  },
+  listitem: {
+    borderRadius: 1,
+    borderColor: 'red',
+    backgroundColor: 'green',
+    paddingBottom: 20,
+    marginBottom: 20,
+    color: '#fff',
+    fontSize: 20,
+  },
+});
