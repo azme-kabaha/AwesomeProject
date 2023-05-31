@@ -1,14 +1,22 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Form from '../comp/Form'
 import User from '../comp/User'
 import ReposList from '../comp/ReposList'
 
 const Home = () => {
+//
+  const[userx,setUserx]=useState('')
+
   return (
     <View style={styles.style1}>
-      <Form/>
-      <User username='AzmeKabaha123' bio='React Nativ Dev/ Mechanic' follwers={30} following={33}/>
+      <Form setUserx={setUserx}  />
+      <User
+       username={userx.login}
+       bio={userx.bio} 
+       follwers={userx.follwers}
+        following={userx.following}
+        />
       <ReposList/>
     </View>
   )

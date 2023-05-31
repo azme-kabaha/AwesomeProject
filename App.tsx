@@ -29,6 +29,10 @@
 // const styles = StyleSheet.create({})
 
 
+//-------------------------------------------------------------
+
+// זה קשור ל FORM HOME REPOSTLIS USER
+
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Home from './app2/components/screens/Home'

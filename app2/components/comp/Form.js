@@ -1,10 +1,25 @@
 import { Button, StyleSheet, Text, TextInput, View,ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
-const Form = () => {
+const Form = (props) => {
 
   const[isLoading,setisLoading]= useState(false);
   const [input,setInput] = useState();
+
+  const fetchUserData= async ()=>{
+    setisLoading(true);
+
+    try{
+      const respons= await fetch('https://api.github.com/users/' + input)
+      const userr = await respons.json();
+      props.setUserx(userr)
+      setisLoading(false);
+    }
+    catch(err){
+     console.log('err', err);
+    }
+  
+  };
 
   useEffect(()=>{
 
@@ -19,13 +34,11 @@ const Form = () => {
       }} />
       <Button title='Done'
       onPress={()=> {
-        setisLoading(true)
-      
-      setTimeout(() => {
-        setisLoading(false)
-      }, 3000);
+        fetchUserData();
     }}
+
     />
+
     {isLoading? <ActivityIndicator/> : null}
     </View>
      
